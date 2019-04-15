@@ -1,0 +1,21 @@
+{
+  "name": "reactbot",
+  "version": "1.0.0",
+  "description": "A reactbot for webpage",
+  "main": "index.js",
+  "engines": {
+    "node": "10.15.1",
+    "npm": "6.4.1"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "backend": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ayubur Rahaman",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4",
+    "nodemon": "^1.18.11"
+  }
+}
