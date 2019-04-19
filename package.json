@@ -10,6 +10,8 @@
   "scripts": {
     "start": "node index.js",
     "backend": "nodemon index.js",
+    "frontend": "npm run start --prefix client",
+    "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Ayubur Rahaman",
@@ -17,7 +19,10 @@
   "dependencies": {
     "body-parser": "^1.18.3",
     "dialogflow": "^0.8.2",
-    "express": "^4.16.4",
-    "nodemon": "^1.18.11"
+    "express": "^4.16.4"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.11",
+    "concurrently": "^4.1.0"
   }
 }
