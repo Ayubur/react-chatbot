@@ -4,7 +4,7 @@ import { v4 as uuid } from "uuid";
 import Cookies from "universal-cookie";
 import Message from "./Message";
 
-import getWeatherInfo from "../../weather";
+import getWeatherInfo from "../Weather";
 
 const cookies = new Cookies();
 
