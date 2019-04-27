@@ -4,7 +4,7 @@ import { v4 as uuid } from "uuid";
 import Cookies from "universal-cookie";
 import Message from "./Message";
 
-import getWeatherInfo from "../Weather";
+import getWeatherInfo from "../../Weather";
 
 const cookies = new Cookies();
 
@@ -37,40 +37,38 @@ class Chatbot extends Component {
       userId: cookies.get("userId")
     });
 
-    if (res.data.intent) {
-      if (res.data.intent.displayName === "detect-city") {
-        const city = res.data.parameters.fields["geo-city"].stringValue;
-        if (city) {
-          getWeatherInfo(city).then(temp => {
-            says = {
-              speak: "bot",
-              msg: {
-                text: {
-                  text: `The weather of ${city} is ${temp}°C`
-                }
-              }
-            };
-            this.setState({ messages: [...this.state.messages, says] });
-          });
-        } else {
+    if (res.data.intent.displayName === "detect-city") {
+      const city = res.data.parameters.fields["geo-city"].stringValue;
+      if (city) {
+        getWeatherInfo(city).then(temp => {
           says = {
             speak: "bot",
             msg: {
               text: {
-                text: "Oops !! Sorry, weather report not found "
+                text: `The weather of ${city} is ${temp}°C`
               }
             }
           };
           this.setState({ messages: [...this.state.messages, says] });
-        }
+        });
       } else {
-        for (let msg of res.data.fulfillmentMessages) {
-          says = {
-            speak: "bot",
-            msg: msg
-          };
-          this.setState({ messages: [...this.state.messages, says] });
-        }
+        says = {
+          speak: "bot",
+          msg: {
+            text: {
+              text: "Oops !! Sorry, weather report not found "
+            }
+          }
+        };
+        this.setState({ messages: [...this.state.messages, says] });
+      }
+    } else {
+      for (let msg of res.data.fulfillmentMessages) {
+        says = {
+          speak: "bot",
+          msg: msg
+        };
+        this.setState({ messages: [...this.state.messages, says] });
       }
     }
   }
@@ -133,7 +131,7 @@ class Chatbot extends Component {
           width: 400,
           position: "absolute",
           bottom: 0,
-          right: 10,
+          right: 20,
           border: "1px solid lightgrey"
         }}
       >

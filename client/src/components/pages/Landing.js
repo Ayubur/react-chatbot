@@ -2,8 +2,8 @@ import React from "react";
 
 const Landing = () => {
   return (
-    <div>
-      <h1>This is Landing page.</h1>
+    <div className="container">
+      <h3>This is a react weather bot.</h3>
     </div>
   );
 };
