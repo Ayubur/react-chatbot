@@ -46,7 +46,7 @@ class Chatbot extends Component {
             speak: "bot",
             msg: {
               text: {
-                text: `The weather of ${city} is ${temp}°C`
+                text: `The temparature of ${city} is ${temp}°C`
               }
             }
           };
@@ -57,7 +57,8 @@ class Chatbot extends Component {
           speak: "bot",
           msg: {
             text: {
-              text: "Oops !! Sorry, weather report not found "
+              text:
+                "Oops !! Sorry, weather report not found. try another location"
             }
           }
         };
