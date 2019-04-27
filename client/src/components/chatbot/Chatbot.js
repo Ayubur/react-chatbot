@@ -46,7 +46,7 @@ class Chatbot extends Component {
             speak: "bot",
             msg: {
               text: {
-                text: `The temparature of ${city} is ${temp}°C`
+                text: `The temperature of ${city} is ${temp}°C`
               }
             }
           };
