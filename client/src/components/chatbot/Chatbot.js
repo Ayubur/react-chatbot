@@ -14,7 +14,8 @@ class Chatbot extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      messages: []
+      messages: [],
+      showBot: true
     };
 
     if (cookies.get("userId") === undefined) {
@@ -93,7 +94,9 @@ class Chatbot extends Component {
 
   componentDidUpdate() {
     this.messagesEnd.scrollIntoView({ behaviour: "smooth" });
-    this.textInput.focus();
+    if (this.textInput) {
+      this.textInput.focus();
+    }
   }
 
   renderMessages(stateMessages) {
@@ -116,6 +119,18 @@ class Chatbot extends Component {
     }
   }
 
+  show = () => {
+    this.setState({
+      showBot: true
+    });
+  };
+
+  hide = () => {
+    this.setState({
+      showBot: false
+    });
+  };
+
   handleKeyPress = e => {
     if (e.key === "Enter") {
       this.df_text_query(e.target.value);
@@ -124,49 +139,90 @@ class Chatbot extends Component {
   };
 
   render() {
-    return (
-      <div
-        style={{
-          height: 500,
-          width: 400,
-          position: "absolute",
-          bottom: 0,
-          right: 20,
-          border: "1px solid lightgrey"
-        }}
-      >
-        <nav>
-          <div className="nav-wrapper">
-            <div className="brand-logo">Chatbot</div>
-          </div>
-        </nav>
+    if (this.state.showBot) {
+      return (
         <div
-          id="chatbot"
-          style={{ height: 388, width: "100%", overflow: "auto" }}
+          style={{
+            height: 500,
+            width: 400,
+            position: "absolute",
+            bottom: 0,
+            right: 20,
+            border: "1px solid lightgrey"
+          }}
         >
-          {this.renderMessages(this.state.messages)}
+          <nav>
+            <div className="nav-wrapper">
+              <div className="brand-logo">Chatbot</div>
+              <ul id="nav-mobile" className="right hide-on-med-and-down">
+                <li>
+                  {
+                    //eslint-disable-next-line
+                    <a onClick={this.hide}>Close</a>
+                  }
+                </li>
+              </ul>
+            </div>
+          </nav>
+          <div
+            id="chatbot"
+            style={{ height: 388, width: "100%", overflow: "auto" }}
+          >
+            {this.renderMessages(this.state.messages)}
+            <div
+              ref={el => (this.messagesEnd = el)}
+              style={{ float: "left", clear: "both" }}
+            />
+          </div>
+          <div className="col s12">
+            <input
+              style={{
+                margin: 0,
+                borderTop: "1px solid lightgrey",
+                paddingLeft: "1%",
+                paddingRight: "1%",
+                width: "98%"
+              }}
+              ref={input => (this.textInput = input)}
+              type="text"
+              placeholder="Enter your text"
+              onKeyPress={this.handleKeyPress}
+            />
+          </div>
+        </div>
+      );
+    } else {
+      return (
+        <div
+          style={{
+            height: 40,
+            width: 400,
+            position: "absolute",
+            bottom: 0,
+            right: 20,
+            border: "1px solid lightgrey"
+          }}
+        >
+          <nav>
+            <div className="nav-wrapper">
+              <div className="brand-logo">Chatbot</div>
+              <ul id="nav-mobile" className="right hide-on-med-and-down">
+                <li>
+                  {
+                    //eslint-disable-next-line
+                    <a onClick={this.show}>Show</a>
+                  }
+                </li>
+              </ul>
+            </div>
+          </nav>
           <div
             ref={el => (this.messagesEnd = el)}
             style={{ float: "left", clear: "both" }}
           />
         </div>
-        <div className="col s12">
-          <input
-            style={{
-              margin: 0,
-              borderTop: "1px solid lightgrey",
-              paddingLeft: "1%",
-              paddingRight: "1%",
-              width: "98%"
-            }}
-            ref={input => (this.textInput = input)}
-            type="text"
-            placeholder="Enter your text"
-            onKeyPress={this.handleKeyPress}
-          />
-        </div>
-      </div>
-    );
+      );
+    }
   }
 }
 
