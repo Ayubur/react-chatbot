@@ -1,4 +1,6 @@
-const OPENWEATHER_API_KEY = "10e153c30a27e0311ddcfa2d11f9dd3a";
+const ApiKeys = require('./config/keys')
+
+const OPENWEATHER_API_KEY = ApiKeys.OPENWEATHER_API_KEY;
 
 const getWeatherInfo = city =>
   fetch(
@@ -12,4 +14,4 @@ const getWeatherInfo = city =>
     })
     .catch(error => console.log(error));
 
-module.exports = getWeatherInfo;
+export default getWeatherInfo;
