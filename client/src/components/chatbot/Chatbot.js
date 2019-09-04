@@ -38,15 +38,18 @@ class Chatbot extends Component {
       userId: cookies.get("userId")
     });
 
-    if (res.data.intent.displayName === "detect-city") {
+    if (res.data.intent.displayName === "detect-city-temperature") {
       const city = res.data.parameters.fields["geo-city"].stringValue;
+      
       if (city) {
-        getWeatherInfo(city).then(temp => {
+        getWeatherInfo(city).then(data => {
+          const temp = Math.round(data.main.temp-273.15)
+          const humidity = data.main.humidity
           says = {
             speak: "bot",
             msg: {
               text: {
-                text: `The temperature of ${city} is ${temp}°C`
+                text: `The temperature of ${city} is ${temp}°C, humidity is ${humidity}`
               }
             }
           };
@@ -58,7 +61,34 @@ class Chatbot extends Component {
           msg: {
             text: {
               text:
-                "Oops !! Sorry, weather report not found. try another location"
+                `Oops !! Sorry, temperature of ${city} not found. try another location`
+            }
+          }
+        };
+        this.setState({ messages: [...this.state.messages, says] });
+      }
+    } else if (res.data.intent.displayName === "detect-city-weather") {
+      const city = res.data.parameters.fields["geo-city"].stringValue;
+      if (city) {
+        getWeatherInfo(city).then(data => {
+          const desc = data.weather[0].description
+          says = {
+            speak: "bot",
+            msg: {
+              text: {
+                text: `${desc}`
+              }
+            }
+          };
+          this.setState({ messages: [...this.state.messages, says] });
+        });
+      } else {
+        says = {
+          speak: "bot",
+          msg: {
+            text: {
+              text:
+                `Oops !! Sorry, weather report of ${city} not found. try another location`
             }
           }
         };

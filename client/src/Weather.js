@@ -8,9 +8,10 @@ const getWeatherInfo = city =>
   )
     .then(response => response.json())
     .then(data => {
-      const kelvin = data.main.temp;
-      const celsius = Math.round(kelvin - 273.15);
-      return celsius;
+      // const kelvin = data.main.temp;
+      // const celsius = Math.round(kelvin - 273.15);
+      // return celsius;
+      return data
     })
     .catch(error => console.log(error));
 
