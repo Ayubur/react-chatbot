@@ -44,12 +44,11 @@ class Chatbot extends Component {
       if (city) {
         getWeatherInfo(city).then(data => {
           const temp = Math.round(data.main.temp-273.15)
-          const humidity = data.main.humidity
           says = {
             speak: "bot",
             msg: {
               text: {
-                text: `The temperature of ${city} is ${temp}°C, humidity is ${humidity}`
+                text: `The temperature of ${city} is ${temp}°C`
               }
             }
           };
@@ -71,12 +70,15 @@ class Chatbot extends Component {
       const city = res.data.parameters.fields["geo-city"].stringValue;
       if (city) {
         getWeatherInfo(city).then(data => {
+
           const desc = data.weather[0].description
+          const humidity = data.main.humidity
+          const windspeed = data.wind.speed
           says = {
             speak: "bot",
             msg: {
               text: {
-                text: `${desc}`
+                text: `Weather - ${desc}, Humidity - ${humidity}, Wind speed - ${windspeed}`
               }
             }
           };
