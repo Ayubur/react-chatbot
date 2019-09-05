@@ -70,7 +70,7 @@ class Chatbot extends Component {
       const city = res.data.parameters.fields["geo-city"].stringValue;
       if (city) {
         getWeatherInfo(city).then(data => {
-
+          
           const desc = data.weather[0].description
           const humidity = data.main.humidity
           const windspeed = data.wind.speed
